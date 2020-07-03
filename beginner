@@ -1,0 +1,22 @@
+// constant value of my age
+let myAge = 21;
+
+// variable of early years
+let earlyYears = 2;
+
+earlyYears *= 10.5;
+
+
+// later years after year 2 
+let laterYears = myAge - 2;
+
+// number of dog years for later years
+laterYears *= 4;
+
+// add earlyYears and laterYears in a new variable
+let myAgeInDogYears = earlyYears + laterYears;
+
+let myName = "Mr. Magoo";
+
+// display name and age in dog years
+console.log(`My name is ${myName}. I am ${myAge} years old in human years which is ${myAgeInDogYears} years old in dog years.`);
