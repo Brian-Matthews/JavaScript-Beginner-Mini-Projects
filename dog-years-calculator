@@ -1,5 +1,5 @@
 // constant value of my age
-let myAge = 21;
+const myAge = 21;
 
 // variable of early years
 let earlyYears = 2;
@@ -18,5 +18,5 @@ let myAgeInDogYears = earlyYears + laterYears;
 
 let myName = "Mr. Magoo";
 
-// display name and age in dog years
+// display name and age in dog years with use of back ticks & template literals
 console.log(`My name is ${myName}. I am ${myAge} years old in human years which is ${myAgeInDogYears} years old in dog years.`);
