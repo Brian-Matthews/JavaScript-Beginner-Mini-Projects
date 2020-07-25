@@ -1,0 +1,61 @@
+// This is an example of a Localhost small form project using Node.js and Express
+
+// variable to get express ready ... so that we can use a basic express framework database
+
+let express = require ("express")
+
+// new variable to then call express so that server now lives in this variable
+
+let newCatApp = express()
+
+// express boilerplate code needed to tell express to add the user input to the body object
+
+newCatApp.use(express.urlencoded({extended: false}))
+
+// use a get method to tell our server what to do if someone sends a request via our homepage
+// arguments comprise of "/" for homepage url, and a function for request and response
+
+newCatApp.get("/", function(req, res){
+    // response using an express method called send, along with back ticks in which to write html form etc.
+    // form action attribute sets the url to display, and form method attribute controls the type of request the browser will send to the server (can be either a POST request or a GET request) 
+    
+    res.send(`
+    <form action="/answer" method="POST">
+        <p>What is the cat's favourite food?</p>
+        <input name="catFood" autocomplete="off">
+        <button>Submit Your Answer</button>
+    </form>
+    `)
+})
+
+// to instruct app what to do if it receives a post request
+// use if statement to evaluate user input
+// req used to accept the request object passed from express into the function
+// .body is the body content of what the user is sending via a post request
+// .catFood aa the unique form input name
+// .toLowerCase() used to allow user to submit input with text case variations ... note == "chicken" therefore coded as lowercase
+// == "chicken" denotes the true value
+
+newCatApp.post("/answer", function(req, res){
+   if (req.body.catFood.toLowerCase() == "chicken") {
+        res.send(`
+        <p>Puurrrfect, correct answer! The cat loves to eat chicken</p>
+        <a href="/">Return to homepage</a>
+        `)
+ // however if the user submits a different input, then incorrect answer returned   
+   } else {
+    res.send(`
+    <p>Doh, sorry, wrong answer! The cat will sniff his nose at that.</p>
+    <a href="/">Return to homepage</a>
+    `)
+   }
+})
+
+/* example of a GET request ... if user were to manually type url /answer then response is invalid (as opposed to a POST request made via form field)
+//newCatApp.get("/answer", function(req, res){
+       res.send("Nothing to see here")})
+*/
+
+// to tell our server to start listening for incoming requests on port 4000
+
+newCatApp.listen(4000)
