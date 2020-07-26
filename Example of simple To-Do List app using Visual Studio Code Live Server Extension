@@ -1,0 +1,116 @@
+<!--example of a simple html list form within browser-->
+<!--the idea is to allow user to input a "to-do list" item-->
+<!--then the user submitted item needs to be displayed in an unordered list-->
+<!--this requires use of unique ID's for the form itself, the input field, and unordered list (to send input item there)-->
+<!--those ID's can then be hooked onto by JavaScript file variables-->
+
+<!-- ====================================================   HTML CODE   ======================================================================== -->
+
+<!DOCTYPE html>
+  <head>
+    <title>Brian's Simple-To-Do-App</title>
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <h1>Brian's Simple To-Do App</h1>
+
+    <!--add ID to form tag so JavaScript can "hook onto" the form input field-->
+    <!--unique identifier name give as formHookID (can be named anything)-->
+    
+    <form id="ourForm">
+
+        <!--input is given a unique ID so that we can submit item into list on the browser page--> 
+        
+        <input id = "ourField" type="text" autocomplete="off">       
+        <button id ="">Add Item</button>
+    </form>
+
+    <h3>Items You Need To Do</h3>
+    
+    <!--unique ID given to unordered list so we can pass any items submitted by users to it-->
+    
+    <ul id = "ourUnorderedListId">
+        
+        <!--example of early code to test list
+        
+        <li>Buy Oranges <button>Delete</button></li>
+        <li>Buy Jocks <button>Delete</button></li>
+        <li>Buy Socks <button>Delete</button></li>
+        -->
+        
+    </ul>
+
+    <!--include JavaScript file-->
+    <script src="simple-to-do-app.js"></script>
+  </body>
+</html>
+
+<!-- ======================================================================================================= -->
+
+// ========================= JAVASCRIPT CODE ======================
+
+/* form ID name taken from html file
+use of an ID name allows us to "hook onto" the form text field input
+saved as a variable so it is easier to read
+requires use of unique ID's from the form itself, the input field, and unordered list (to send input item there)-->
+ID's used to hook onto html by JavaScript file variables */
+
+let ourForm = document.getElementById("ourForm")
+let ourField = document.getElementById("ourField")
+let ourUnorderedListId = document.getElementById("ourUnorderedListId")
+
+// this allows us to then listen to a user adding an item 
+
+ourForm.addEventListener("submit", (e) => {
+
+    // submit is prevented from simply refeshing page / sent data off by browser 
+    // by use of preventDefault method
+   
+    e.preventDefault()
+    console.log(ourField.value)
+    // takes value of the user input and passes it to new function below
+   
+    submittedInputItem(ourField.value)
+    
+})
+
+// new function, using insertAdjacentHTML method, to add user input to the unordered list
+
+function submittedInputItem (userInput){
+
+    // variable using template literal to accept user input and then add it to unordered list
+    
+    let ourUserHTML = `<li>${userInput} <button onclick="deleteItem(this)">Delete</button></li>`
+
+    // <button onclick="myFunction()">Click me</button> 
+    // use of 'this' to determine which exact item is to be deleted i.e. 'this' targets the nearest relevant element
+    // as shown ... <button onclick="deleteItem(this)">Delete</button></li>
+
+    ourUnorderedListId.insertAdjacentHTML("beforeend", ourUserHTML)
+   
+    // beforeend represents where in the list new items will be added
+    // ourUserHTML represents whatever the user typed into the form field
+
+    // now, to autoclear the form field to allow new inputs, we need to do the following
+    // we look inside ourFieldId using .value and then set to equal an empty string
+    
+    ourField.value = ""
+
+    // next, so that the user cursor will automatically be ready to type in the form field
+    // we use a method called .focus()
+    
+    ourField.focus()
+
+}
+
+// to enable the delete button (we cannot use .addEventListener to listen for an event that has yet to occur)
+// create a new function to handle delete functionality
+
+function deleteItem (elementToDelete){
+    elementToDelete.parentElement.remove()
+}
+
+// ============================================================   ENDS JAVASCRIPT CODE   ==========================================
